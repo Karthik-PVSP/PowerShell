@@ -15,6 +15,12 @@ $Password = "password"
 $ListName1 = "listname"
 $ListName2= "listname2"
 $viewName="View1"
+
+
+
+
+
+
 #Connect to SharePoint Online
 Connect-PnPOnline -Url $SiteURL -Credentials (New-Object System.Management.Automation.PSCredential($UserName, (ConvertTo-SecureString $Password -AsPlainText -Force)))
 
@@ -33,13 +39,20 @@ Total List1 Items View Count: $ListItemViewCount1
 Total List2 Items View Count: $ListItemViewCount2
 "@
 
+
+#set the jira server configuration
+$JiraServerConfiguration = Set-JiraServerConfiguration -JiraUrl $JiraURL
+#
+
+
 #Setting the variables
 $JiraURL = "https://jira.com"
 $JiraUserName = "username"
 $JiraPassword = "password"
 $JiraProjectKey = "projectkey"
 $JiraIssueKey = "issuekey"
+$JiraCred=(New-Object System.Management.Automation.PSCredential($JiraUserName, (ConvertTo-SecureString $JiraPassword -AsPlainText -Force)))
 
 # add comments to user story
-Add-JiraComment -JiraUrl $JiraURL -JiraUserName $JiraUserName -JiraPassword $JiraPassword -JiraProjectKey $JiraProjectKey -JiraIssueKey $JiraIssueKey -JiraComment $JiraComment
+Add-JiraComment -JiraUrl $JiraURL -Credentials $JiraCred -JiraProjectKey $JiraProjectKey -JiraIssueKey $JiraIssueKey -JiraComment $JiraComment
 
